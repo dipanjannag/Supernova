@@ -1,5 +1,5 @@
 #!/usr/bin/nodejs
-var debug = require('debug')('my-application');
+var debug = require('debug')('Supernova');
 var app = require('../app');
 
 app.set('port', 80);
