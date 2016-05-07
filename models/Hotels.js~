@@ -7,7 +7,6 @@ var sequelize = new Sequelize("sledgehammer", 'ba53a0dd1dcbb4', '8241b48e', {
     pool: false
 });
 var Hotel = sequelize.define('Hotel', {
-  id : Sequelize.INTEGER,
   name: Sequelize.STRING,
   address: Sequelize.TEXT,
   star_rating : Sequelize.INTEGER,
@@ -15,5 +14,14 @@ var Hotel = sequelize.define('Hotel', {
   amenities : Sequelize.STRING,
   location_lat : Sequelize.DOUBLE,
   location_lon : Sequelize.DOUBLE,
-  city_code : Sequelize.INTEGER
-})
+  city_code : Sequelize.INTEGER,
+	image_uri1 : Sequelize.STRING,
+	image_uri2 : Sequelize.STRING,
+	image_uri3 : Sequelize.STRING,
+	image_uri4 : Sequelize.STRING,
+	image_uri5 : Sequelize.STRING,
+	image_uri6 : Sequelize.STRING,
+	image_uri7 : Sequelize.STRING,
+	image_uri8 : Sequelize.STRING
+});
+module.exports = Hotel;

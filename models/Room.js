@@ -9,7 +9,7 @@ var sequelize = new Sequelize("sledgehammer", 'ba53a0dd1dcbb4', '8241b48e', {
 var Hotel = require('./Hotels');
 var Room = sequelize.define('Room', {
   hotel_name : Sequelize.STRING,
-  type : Sequelize.INTEGER
+  type : Sequelize.INTEGER,
   start_date : Sequelize.DATE,
   end_date : Sequelize.DATE,
   count : Sequelize.INTEGER
@@ -17,3 +17,4 @@ var Room = sequelize.define('Room', {
 
 Hotel.hasMany(Room, {as: 'available_rooms'});
 Room.belongsTo(Hotel);
+module.exports = Room;
