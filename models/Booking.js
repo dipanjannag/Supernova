@@ -41,7 +41,14 @@ var process_booking = function(room_id, booked_by_email, start, end){
 	var filter1 = TableQuery.stringFilter('start', QueryComparisons.LESS_THAN_OR_EQUAL, endDate);
 	var filter1 = TableQuery.stringFilter('end', QueryComparisons.GREATER_THAN_OR_EQUAL, startDate);
 	var combinedFilter = TableQuery.combineFilters(filter1, TableOperators.AND, filter2);
-	var query = new azure.TableQuery()
-		.select(['start'])
-		.where('start lt ?', 'hometasks');	
-	}
+	tableSvc.queryEntities('mytable',query, null, function(error, result, response) {
+		if(!error) {
+		  // query was successful
+		}
+	});
+}
+
+
+
+
+
