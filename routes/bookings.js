@@ -6,6 +6,7 @@ var router = express.Router();
 
 router.route('/:room').post(auth,function(req, res) {
 	// this should be the body format. https://github.com/moment/moment/issues/1407
+	// I think a strict check should be there to check proper date format
 	var start_d = req.body.start_d;
 	var end_d = req.body.end_d;
 	console.log(start_d);

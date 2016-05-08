@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/',  function(req, res) {
-  res.render('index', { title: 'Supernova' });
+  res.json({title: 'shorTrip core api', codeName: 'Supernova', version : '0.0.1-alpha'});
 });
 
 module.exports = router;
