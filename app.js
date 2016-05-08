@@ -39,7 +39,7 @@ UserSchema.sync().then(function () {
    HotelSchema.sync().then(function(){
     RoomSchema.sync().then(function(){
 				BookingSchema.sync().then(function(){
-					AdminSchema.sync({force:true}).then(function(){
+					AdminSchema.sync().then(function(){
 					// hard schema creation complete
 					/*UserSchema.create({
 						name : "Sample",
@@ -50,14 +50,14 @@ UserSchema.sync().then(function () {
 						verified_mobile : false,
 						session_key : "pqrs"
 					});*/
-					AdminSchema.create({
+					/*AdminSchema.create({
 						email: "ad@min",
 						hash : "pqrs",
 						session_key : "pqrs"
-					});
-					HotelSchema.create({name: "502 Fortune Heights", city_code:1}).then(function(htl){
+					});*/
+					/*HotelSchema.create({name: "502 Fortune Heights", city_code:1}).then(function(htl){
 							
-						RoomSchema.create({type : 1, HotelId : htl.id}).then(function(rm){
+						RoomSchema.create({type : 1, HotelId : htl.id, count: 4}).then(function(rm){
 							htl.setAvailable_rooms(rm).then(function(rms){
 								
 							});
@@ -71,7 +71,7 @@ UserSchema.sync().then(function () {
 								}
 							});
 						});
-					});
+					});*/
 				});
 			});
 		});

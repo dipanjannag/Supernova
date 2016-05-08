@@ -7,7 +7,7 @@ var router = express.Router();
 router.route('/:room/:start_d/:end_d').post(auth,function(req, res) {
 	var start_d = new Date(req.params.start_d);
 	var end_d = new Date(req.params.end_d);
-	Booking.findOne({
+	Booking.findAll({
 		attributes:['id'],
 		where : {
 		    $and: [
@@ -40,6 +40,7 @@ router.route('/:room/:start_d/:end_d').post(auth,function(req, res) {
 			});
 		}
 		else{
+		
 			res.json({ message: 'Unavailable for the range',code : 404 });
 		}
 	})

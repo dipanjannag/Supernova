@@ -35,6 +35,7 @@ router.get('/:hotel_id', auth, function(req, res) {
 				//var ret_rooms = [];
 				for(var i = 0; i < rms.length ; i++){
 					ret.rooms.push({
+						id : rms[i].id,
 						type : rms[i].type,
 						count : rms[i].count
 					});
