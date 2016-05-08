@@ -8,6 +8,7 @@ var UserSchema = require('./models/User');
 var HotelSchema = require('./models/Hotels');
 var RoomSchema = require('./models/Room');
 var AdminSchema = require('./models/AdminUser');
+var BookingSchema = require('./models/Bookings');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var hotels = require('./routes/hotels');
@@ -34,28 +35,30 @@ app.use('/users', users);
 app.use('/hotels', hotels);
 /*app.use('/rooms', rooms);*/
 
-UserSchema.sync({force:true}).then(function () {
+UserSchema.sync().then(function () {
    HotelSchema.sync().then(function(){
     RoomSchema.sync().then(function(){
-			AdminSchema.sync({force:true}).then(function(){
-				// hard schema creation complete
-				UserSchema.create({
-					name : "Sample",
-					email : "foo@bar.com",
-					mobile : "1234567890",
-					hash : "abcd",
-					verified_email : false,
-					verified_mobile : false,
-					session_key : "pqrs"
+				BookingSchema.sync().then(function(){
+					AdminSchema.sync({force:true}).then(function(){
+					// hard schema creation complete
+					/*UserSchema.create({
+						name : "Sample",
+						email : "foo@bar.com",
+						mobile : "1234567890",
+						hash : "abcd",
+						verified_email : false,
+						verified_mobile : false,
+						session_key : "pqrs"
+					});*/
+					AdminSchema.create({
+						email: "ad@min",
+						hash : "pqrs",
+						session_key : "pqrs"
+					});
 				});
-				AdminSchema.create({
-					email: "ad@min",
-					hash : "pqrs",
-					session_key : "pqrs"
-				});
-			})
-		})
-  })
+			});
+		});
+  });
 });
 
 /// catch 404 and forwarding to error handler

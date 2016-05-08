@@ -13,7 +13,7 @@ var sequelize = new Sequelize("mysql://bc4bb1c95fb526:1bb83737@eu-cdbr-west-01.c
 });
 var User = sequelize.define('User', {
 	name : Sequelize.STRING,
-	email : Sequelize.STRING,
+	email : { type: Sequelize.STRING, primaryKey: true},
 	mobile : Sequelize.STRING,
 	hash : Sequelize.STRING,
 	verified_email : Sequelize.BOOLEAN,
