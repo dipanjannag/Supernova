@@ -7,6 +7,42 @@ router.get('/', function(req, res) {
   res.send('respond with a resource');
 });
 
+/// user login. would create and return session key
+router.route('/login').post(function(req, res) {
+	var u_email = req.body.email;
+	var u_password = req.body.password;
+	User.findOne({
+		attributes: ['hash'],
+		where : {
+			email : u_email
+		}
+	}).then(function(usr){
+		if(!usr){
+			res.json({ message: 'User does not exists',code : 404 });
+		}
+		else{
+			if(usr.hash = u_password){
+				// auth successful. Create session and return
+				User.update({
+					session_key: '5678',
+				}, {
+					where: {
+						email: u_email
+					}
+				}).then(function(ussr){
+					if(!ussr){
+						
+						res.json({ message: 'Internal error',code : 500 });
+					}
+					else{
+						res.json({ message: 'Success', session_key : "chvkjkjh" , code : 200 });
+					}
+				});
+			}
+		}
+	});
+});
+
 
 /// user signup. requires no auth
 router.route('/signup').post(function(req, res) {
