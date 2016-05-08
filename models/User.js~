@@ -11,8 +11,13 @@ var sequelize = new Sequelize("mysql://bc4bb1c95fb526:1bb83737@eu-cdbr-west-01.c
     idle: 30000
   },
 });
-var AdminUser = sequelize.define('AdminUser',{
-	email: Sequelize.STRING,
-	hash : Sequelize.STRING
+var User = sequelize.define('User', {
+	name : Sequelize.STRING,
+	email : Sequelize.STRING,
+	mobile : Sequelize.STRING,
+	hash : Sequelize.STRING,
+	verified_email : Sequelize.BOOLEAN,
+	verified_mobile : Sequelize.BOOLEAN,
+	email : Sequelize.STRING,
 });
-module.exports = AdminUser;
+module.exports = User;

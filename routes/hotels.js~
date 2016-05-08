@@ -1,0 +1,10 @@
+var express = require('express');
+var auth = require('../middlewares/UserAuth')
+var router = express.Router();
+
+/* GET hotel listing. Require user auth */
+router.get('/',verify_user_authority ,  function(req, res) {
+  res.send('respond with a resource');
+});
+
+module.exports = router;
