@@ -2,8 +2,33 @@ var express = require('express');
 var auth = require('../middlewares/UserAuth');
 var adminAuth = require('../middlewares/AdminAuth');
 var Hotel = require('../models/Hotels');
+var Room = require('../models/Room');
 var router = express.Router();
 
+
+router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
+	var hotel = req.params.hotel_id;
+	Hotel.findOne({
+		where :{
+			id : hotel
+		}
+	}).then(function(htl){
+		if(!htl){
+			res.json({message: "Invalid hotel id", code : 404});
+		}
+		else{
+			Room.create({type : req.params.typ, count : req.params.count, HotelId : htl.id }).then(function(rms){
+				if(!rms){
+					res.json({message: "Internal Error", code : 500});
+				}
+				else{
+					res.json({message: "Success", code : 200, resource_id : rms.id});
+				}
+			});
+		}
+	});
+
+});
 
 router.get('/:hotel_id', auth, function(req, res) {
 	var hotel = req.params.hotel_id;

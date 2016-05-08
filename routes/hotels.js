@@ -14,7 +14,7 @@ router.get('/:city_code', auth ,  function(req, res) {
 		htl = htl || [];
 		var ret = [];
 		for(var i = 0; i < htl.length; i++){
-			console.log(htl[i].name);
+			//console.log(htl[i].name);
 			ret.push({
 				id : htl[i].id,
 				name: htl[i].name,
@@ -43,6 +43,31 @@ router.route('/:nm/:c_code').post(adminAuth,function(req, res) {
 		else{
 			res.json({ message: 'Success',resource_id : hotel.id, code : 200 });
 		}
+	});
+});
+
+
+router.route('/:id').put(adminAuth,function(req, res) {
+	var updateObj = {};
+	for (var key in req.body) {
+		if (req.body.hasOwnProperty(key)) {
+			//console.log(key);
+			updateObj[key] = req.body[key];
+		}
+	}
+	Hotel.update(updateObj, {
+		where: {
+		  id: req.params.id
+		}
+	}).then(function(htl){
+		if(!htl){
+			res.json({ message: 'Internal error', code : 500 });
+		}
+		else{
+			res.json({ message: 'Success',resource_id : req.params.id, code : 200 });
+		}
+		
+		
 	});
 });
 
