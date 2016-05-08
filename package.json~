@@ -1,9 +1,9 @@
 {
-  "name": "application-name",
+  "name": "Supernova",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodejs ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "express": "~4.0.0",
@@ -14,6 +14,7 @@
     "debug": "~0.7.4",
     "jade": "~1.3.0",
 	"sequelize": "~3.23.0",
-	"mysql": "~2.10.2"
+	"mysql": "~2.10.2",
+	"connect": "~3.4.1"
   }
 }
