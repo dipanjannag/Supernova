@@ -12,8 +12,8 @@ var BookingSchema = require('./models/Bookings');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var hotels = require('./routes/hotels');
-
-var rooms = require('./routes/rooms')
+var book = require('./routes/bookings');
+var rooms = require('./routes/rooms');
 
 var app = express();
 
@@ -34,6 +34,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/hotels', hotels);
 app.use('/rooms', rooms);
+app.use('/book', book);
 
 UserSchema.sync().then(function () {
    HotelSchema.sync().then(function(){
