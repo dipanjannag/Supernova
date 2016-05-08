@@ -5,8 +5,30 @@ var Hotel = require('../models/Hotels');
 var router = express.Router();
 
 /* GET hotel listing. Require user auth */
-router.get('/:city_code/:date',auth ,  function(req, res) {
-  res.send('respond with a resource');
+router.get('/:city_code', auth ,  function(req, res) {
+  Hotel.findAll({
+		where : {
+			city_code : req.params.city_code
+		}
+	}).then(function(htl){
+		htl = htl || [];
+		var ret = [];
+		for(var i = 0; i < htl.length; i++){
+			console.log(htl[i].name);
+			ret.push({
+				id : htl[i].id,
+				name: htl[i].name,
+				address: htl[i].address,
+				star_rating : htl[i].star_rating,
+				user_rating : htl[i].user_rating,
+				amenities : htl[i].amenities,
+				location_lat : htl[i].location_lat,
+				location_lon : htl[i].location_lon,
+				city_code : htl[i].city_code
+			});
+		}
+		res.json(ret);
+	});
 });
 
 /// Create a new hotel. Requires admin auth

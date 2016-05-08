@@ -13,7 +13,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var hotels = require('./routes/hotels');
 
-/*var rooms = require('./routes/rooms')*/
+var rooms = require('./routes/rooms')
 
 var app = express();
 
@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/hotels', hotels);
-/*app.use('/rooms', rooms);*/
+app.use('/rooms', rooms);
 
 UserSchema.sync().then(function () {
    HotelSchema.sync().then(function(){
@@ -54,6 +54,23 @@ UserSchema.sync().then(function () {
 						email: "ad@min",
 						hash : "pqrs",
 						session_key : "pqrs"
+					});
+					HotelSchema.create({name: "502 Fortune Heights", city_code:1}).then(function(htl){
+							
+						RoomSchema.create({type : 1, HotelId : htl.id}).then(function(rm){
+							htl.setAvailable_rooms(rm).then(function(rms){
+								
+							});
+							//htl.getAvailable_rooms().then(function(rms){ console.log(rms.name); });
+							rm.getHotel().then(function(rms){console.log("check this"); console.log(rms.id);});
+							htl.getAvailable_rooms().then(function(rms){
+								//console.log(type(rms));
+								for (var i = 0; i < rms.length; i++){
+									console.log("trying id");
+									console.log(rms[i].id);
+								}
+							});
+						});
 					});
 				});
 			});
