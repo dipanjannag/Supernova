@@ -17,14 +17,44 @@ router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
 			res.json({message: "Invalid hotel id", code : 404});
 		}
 		else{
-			Room.create({type : req.params.typ, count : req.params.count, HotelId : htl.id }).then(function(rms){
-				if(!rms){
-					res.json({message: "Internal Error", code : 500});
+			// find if there is a room type already. then update count
+			Room.findOne({
+				where: {
+					HotelId: htl.id,
+					type : req.params.typ
+				}
+			}).then(function(rm){
+				if(!rm){
+					// create a new room
+					Room.create({type : req.params.typ, count : req.params.count, HotelId : htl.id }).then(function(rms){
+						if(!rms){
+							res.json({message: "Internal Error", code : 500});
+						}
+						else{
+							res.json({message: "Success", code : 200, resource_id : rms.id});
+						}
+					});
 				}
 				else{
-					res.json({message: "Success", code : 200, resource_id : rms.id});
+					// update count
+					Room.update({
+						count: req.params.count,
+					}, {
+						where: {
+							HotelId: htl.id,
+							type : req.params.typ
+						}
+					}).then(function(uRoom){
+						if(!uRoom){
+							res.json({message: "Internal Error", code : 500});
+						}
+						else{
+							res.json({message: "Success", code : 200, resource_id : uRoom.id});
+						}
+					});
 				}
 			});
+			
 		}
 	});
 
