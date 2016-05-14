@@ -24,7 +24,8 @@ router.get('/:city_code', auth ,  function(req, res) {
 				amenities : htl[i].amenities,
 				location_lat : htl[i].location_lat,
 				location_lon : htl[i].location_lon,
-				city_code : htl[i].city_code
+				city_code : htl[i].city_code,
+				image_uri : htl[i].image_uri1
 			});
 		}
 		res.json(ret);
