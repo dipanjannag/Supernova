@@ -27,6 +27,7 @@ var Hotel = sequelize.define('Hotel', {
 	image_uri5 : Sequelize.STRING,
 	image_uri6 : Sequelize.STRING,
 	image_uri7 : Sequelize.STRING,
-	image_uri8 : Sequelize.STRING
+	image_uri8 : Sequelize.STRING,
+	min_price : Sequelize.INTEGER
 });
 module.exports = Hotel;

@@ -2,10 +2,12 @@ var express = require('express');
 var auth = require('../middlewares/UserAuth');
 var adminAuth = require('../middlewares/AdminAuth');
 var Hotel = require('../models/Hotels');
+var Room = require('../models/Room');
 var router = express.Router();
 
 /* GET hotel listing. Require user auth */
 router.get('/:city_code', auth ,  function(req, res) {
+	var i = 0;
   Hotel.findAll({
 		where : {
 			city_code : req.params.city_code
@@ -13,8 +15,9 @@ router.get('/:city_code', auth ,  function(req, res) {
 	}).then(function(htl){
 		htl = htl || [];
 		var ret = [];
-		for(var i = 0; i < htl.length; i++){
+		for(i = 0; i < htl.length; i++){
 			//console.log(htl[i].name);
+			
 			ret.push({
 				id : htl[i].id,
 				name: htl[i].name,
@@ -25,10 +28,12 @@ router.get('/:city_code', auth ,  function(req, res) {
 				location_lat : htl[i].location_lat,
 				location_lon : htl[i].location_lon,
 				city_code : htl[i].city_code,
-				image_uri : htl[i].image_uri1
+				image_uri : htl[i].image_uri1,
+				min_price : htl[i].min_price
 			});
 		}
 		res.json(ret);
+		
 	});
 });
 

@@ -6,8 +6,9 @@ var Room = require('../models/Room');
 var router = express.Router();
 
 
-router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
+router.route('/:hotel_id/:typ/:count/:price').post(adminAuth,function(req, res) {
 	var hotel = req.params.hotel_id;
+	var need_update = false;
 	Hotel.findOne({
 		where :{
 			id : hotel
@@ -17,6 +18,10 @@ router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
 			res.json({message: "Invalid hotel id", code : 404});
 		}
 		else{
+			if(htl.min_price > req.params.price){
+				// updtae min price of hotel
+				need_update = true;
+			}
 			// find if there is a room type already. then update count
 			Room.findOne({
 				where: {
@@ -31,6 +36,18 @@ router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
 							res.json({message: "Internal Error", code : 500});
 						}
 						else{
+							//res.json({message: "Success", code : 200, resource_id : rms.id});
+							if(need_update){
+								Hotel.update({
+									min_price : req.params.price,
+								}, {
+									where: {
+										id : hotel
+									}
+								}).then(function(hh){
+									// here the request ends
+								});
+							}
 							res.json({message: "Success", code : 200, resource_id : rms.id});
 						}
 					});
@@ -49,7 +66,18 @@ router.route('/:hotel_id/:typ/:count').post(adminAuth,function(req, res) {
 							res.json({message: "Internal Error", code : 500});
 						}
 						else{
-							res.json({message: "Success", code : 200, resource_id : uRoom.id});
+							if(need_update){
+								Hotel.update({
+									min_price : req.params.price,
+								}, {
+									where: {
+										id : hotel
+									}
+								}).then(function(hh){
+									res.json({message: "Success", code : 200, resource_id : rms.id});
+								});
+							}
+							//res.json({message: "Success", code : 200, resource_id : uRoom.id});
 						}
 					});
 				}
