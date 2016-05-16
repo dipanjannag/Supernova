@@ -31,7 +31,7 @@ router.route('/:hotel_id/:typ/:count/:price').post(adminAuth,function(req, res) 
 			}).then(function(rm){
 				if(!rm){
 					// create a new room
-					Room.create({type : req.params.typ, count : req.params.count, HotelId : htl.id }).then(function(rms){
+					Room.create({type : req.params.typ, count : req.params.count, HotelId : htl.id, price_per_hour : req.params.price}).then(function(rms){
 						if(!rms){
 							res.json({message: "Internal Error", code : 500});
 						}
@@ -56,6 +56,7 @@ router.route('/:hotel_id/:typ/:count/:price').post(adminAuth,function(req, res) 
 					// update count
 					Room.update({
 						count: req.params.count,
+						price_per_hour : req.params.price
 					}, {
 						where: {
 							HotelId: htl.id,
@@ -74,10 +75,10 @@ router.route('/:hotel_id/:typ/:count/:price').post(adminAuth,function(req, res) 
 										id : hotel
 									}
 								}).then(function(hh){
-									res.json({message: "Success", code : 200, resource_id : rms.id});
+									//res.json({message: "Success", code : 200, resource_id : rms.id});
 								});
 							}
-							//res.json({message: "Success", code : 200, resource_id : uRoom.id});
+							res.json({message: "Success", code : 200, resource_id : uRoom.id});
 						}
 					});
 				}
@@ -120,7 +121,8 @@ router.get('/:hotel_id', auth, function(req, res) {
 					ret.rooms.push({
 						id : rms[i].id,
 						type : rms[i].type,
-						count : rms[i].count
+						count : rms[i].count,
+						price : rms[i].price_per_hour
 					});
 				}
 				//ret.rooms = ret_rooms;
