@@ -12,7 +12,7 @@ router.route('/login').post(function(req, res) {
 	var u_email = req.body.email;
 	var u_password = req.body.password;
 	User.findOne({
-		attributes: ['hash'],
+		//attributes: ['hash'],
 		where : {
 			email : u_email
 		}
@@ -21,7 +21,9 @@ router.route('/login').post(function(req, res) {
 			res.json({ message: 'User does not exists',code : 404 });
 		}
 		else{
-			if(usr.hash = u_password){
+			console.log(usr.hash);
+			
+			if(usr.hash == u_password){
 				// auth successful. Create session and return
 				User.update({
 					session_key: '5678',
@@ -35,9 +37,12 @@ router.route('/login').post(function(req, res) {
 						res.json({ message: 'Internal error',code : 500 });
 					}
 					else{
-						res.json({ message: 'Success', session_key : "5678" , code : 200 });
+						res.json({ message: 'Success', session_key : "5678", name : usr.name, mobile: usr.mobile ,email: usr.email, code : 200 });
 					}
 				});
+			}
+			else{
+				res.json({ message: 'Fail' , code : 403 });
 			}
 		}
 	});
@@ -74,7 +79,7 @@ router.route('/signup').post(function(req, res) {
 				name: u_name,
 				email: u_email,
 				mobile : u_mobile,
-				passowrd : u_password,
+				hash : u_password,
 				verified_email : false,
 				verified_mobile : false
 			}).then(function(ussr){
