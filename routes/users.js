@@ -35,7 +35,7 @@ router.route('/login').post(function(req, res) {
 						res.json({ message: 'Internal error',code : 500 });
 					}
 					else{
-						res.json({ message: 'Success', session_key : "chvkjkjh" , code : 200 });
+						res.json({ message: 'Success', session_key : "5678" , code : 200 });
 					}
 				});
 			}
