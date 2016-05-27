@@ -87,7 +87,7 @@ router.route('/signup').post(function(req, res) {
 					res.json({ message: 'Internal error',code : 500 });
 				}
 				else{
-					res.json({ message: 'Success',code : 200, resource_id : ussr.email });
+					res.json({ message: 'Success',code : 200, email: u_email, mobile: u_mobile, name : u_name, session_key: u_password });
 				}
 			});
 		}
