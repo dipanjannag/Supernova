@@ -44,7 +44,7 @@ router.route('/:room').post(auth,function(req, res) {
 				}
 				else{
 					res.json({ message: 'Success',code : 200, resource_id: booked.id });
-					handle_partner_confirmation('+918158953392');
+					handle_partner_confirmation('+918158953392', booked.id);
 					
 				}
 			});
@@ -63,12 +63,11 @@ var handle_partner_confirmation = function(call_in_number, booking_id){
 	var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
 	 
 	//require the Twilio module and create a REST client 
-	var client = require('twilio')(accountSid, authToken); 
-	 
+	var client = require('twilio')(accountSid, authToken);
 	client.calls.create({ 
 		to: call_in_number, 
 		from: "+12013654002", 
-		url: "http://shortrip-supernova.herokuapp.com/call_partner/"+ booking_id,           
+		url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booking_id,           
 	}, function(err, call) { 
 		//console.log(call.sid); 
 	});

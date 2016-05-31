@@ -24,8 +24,8 @@ router.get('/:booking_id', function(req, res) {
 						  '#' : {
 								Gather : {
 									'@': {
-										Action : '/partner_response?bookingid='+ booking.id ,
-										Method : 'POST'
+										action : '/partner_response?bookingid='+ booking.id ,
+										method : 'POST'
 									},
 									'#' : {
 										Say : 'You have a booking on '+  strt_dt.toDateString() + ' for ' + hour + ' hour. Press 1 to reject'
