@@ -43,8 +43,9 @@ router.route('/:room').post(auth,function(req, res) {
 					res.json({ message: 'Internal error',code : 500 });
 				}
 				else{
-					res.json({ message: 'Success',code : 200, resource_id: booked.id });
 					handle_partner_confirmation('+918158953392', booked.id);
+					res.json({ message: 'Success',code : 200, resource_id: booked.id });
+					
 					
 				}
 			});
@@ -57,13 +58,14 @@ router.route('/:room').post(auth,function(req, res) {
 	});
 });
 
+var client = require('twilio')(accountSid, authToken);
 var e2 = '';
 var handle_partner_confirmation = function(call_in_number, booking_id){
 	var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
 	var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
 	 
 	//require the Twilio module and create a REST client 
-	var client = require('twilio')(accountSid, authToken);
+	
 	client.calls.create({ 
 		to: call_in_number, 
 		from: "+12013654002", 
