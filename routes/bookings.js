@@ -57,7 +57,7 @@ router.route('/:room').post(auth,function(req, res) {
 	});
 });
 
-
+var e2 = '';
 var handle_partner_confirmation = function(call_in_number, booking_id){
 	var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
 	var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
@@ -69,7 +69,8 @@ var handle_partner_confirmation = function(call_in_number, booking_id){
 		from: "+12013654002", 
 		url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booking_id,           
 	}, function(err, call) {
-			var e2 = err; 
+			e2 = err;
+			e2 = call; 
 		//console.log(call.sid); 
 	});
 }
