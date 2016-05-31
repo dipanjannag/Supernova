@@ -10,8 +10,8 @@ router.route('/:room').post(auth,function(req, res) {
 	// I think a strict check should be there to check proper date format
 	var start_d = req.body.start_d;
 	var end_d = req.body.end_d;
-	console.log(start_d);
-	console.log(end_d);
+	//console.log(start_d);
+	//console.log(end_d);
 	Booking.findOne({
 		attributes:['id'],
 		where : {
@@ -70,7 +70,7 @@ var handle_partner_confirmation = function(call_in_number, booking_id){
 		from: "+12013654002", 
 		url: "http://shortrip-supernova.herokuapp.com/call_partner/"+ booking_id,           
 	}, function(err, call) { 
-		console.log(call.sid); 
+		//console.log(call.sid); 
 	});
 }
 module.exports = router;
