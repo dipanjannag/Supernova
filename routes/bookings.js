@@ -3,6 +3,7 @@ var auth = require('../middlewares/UserAuth');
 var adminAuth = require('../middlewares/AdminAuth');
 var Booking = require('../models/Bookings');
 var router = express.Router();
+var http = require('http')
 
 router.route('/:room').post(auth,function(req, res) {
 	// this should be the body format. https://github.com/moment/moment/issues/1407
@@ -43,6 +44,7 @@ router.route('/:room').post(auth,function(req, res) {
 				}
 				else{
 					res.json({ message: 'Success',code : 200, resource_id: booked.id });
+					
 				}
 			});
 			

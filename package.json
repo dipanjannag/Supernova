@@ -17,6 +17,7 @@
 	"mysql": "~2.10.2",
 	"azure-storage": "~0.10.0",
 	"sendgrid":"~1.9.2",
-	"twilio":"~2.9.1"
+	"twilio":"~2.9.1",
+	"object-to-xml":"~1.0.0"
   }
 }
