@@ -68,7 +68,8 @@ var handle_partner_confirmation = function(call_in_number, booking_id){
 		to: call_in_number, 
 		from: "+12013654002", 
 		url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booking_id,           
-	}, function(err, call) { 
+	}, function(err, call) {
+			var e2 = err; 
 		//console.log(call.sid); 
 	});
 }
