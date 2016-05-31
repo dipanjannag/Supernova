@@ -43,7 +43,21 @@ router.route('/:room').post(auth,function(req, res) {
 					res.json({ message: 'Internal error',code : 500 });
 				}
 				else{
-					handle_partner_confirmation('+918158953392', booked.id);
+					//handle_partner_confirmation('+918158953392', booked.id);
+					var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
+					var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
+					 
+					//require the Twilio module and create a REST client 
+					var client = require('twilio')(accountSid, authToken);
+					client.calls.create({ 
+						to: '+918158953392', 
+						from: "+12013654002", 
+						url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booked.id,           
+					}, function(err, call) {
+							e2 = err;
+							e2 = call; 
+						//console.log(call.sid); 
+					});
 					res.json({ message: 'Success',code : 200, resource_id: booked.id });
 					
 					
