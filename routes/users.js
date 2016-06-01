@@ -145,8 +145,8 @@ var send_sign_up_confirm = function(mobile, name, code){
 		from: twilio_no,
 		body : 'Thank You '+ name +' for signing up for shortrip. Please use the following code to verify: ' + code
 	}, function(err, message){
-		console.log(err);
-		console.log(message);
+		//console.log(err);
+		//console.log(message);
 	});
 };
 
