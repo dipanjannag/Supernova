@@ -91,7 +91,7 @@ router.route('/signup').post(function(req, res) {
 					var client = require('twilio');
 					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
 					client.messages.create({
-						to: '+91'+ mobile,
+						to: '+91'+ u_mobile,
 						from: "+12013654002",
 						body : 'Thank You '+ u_name +' for signing up for shortrip. Please use the following code to verify: ' + 5678
 					}, function(err, message){
