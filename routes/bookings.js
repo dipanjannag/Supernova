@@ -54,7 +54,7 @@ router.route('/:room').post(auth,function(req, res) {
 						from: "+12013654002", 
 						url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booked.id,           
 					}, function(err, call) {
-							res.json({ message: 'Success',code : 200, resource_id: booked.id }); 
+							res.json({ message: 'Success',code : 200, resource_id: booked.id, e: err, c : call }); 
 					});
 					
 					
