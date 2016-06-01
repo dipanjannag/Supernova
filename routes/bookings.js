@@ -49,7 +49,7 @@ router.route('/:room').post(auth,function(req, res) {
 					 
 					//require the Twilio module and create a REST client 
 					var client = require('twilio');
-					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b​');
+					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
 					client.calls.create({ 
 						to: '+918158953392', 
 						from: "+12013654002", 
