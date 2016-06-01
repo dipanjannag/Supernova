@@ -88,7 +88,16 @@ router.route('/signup').post(function(req, res) {
 				}
 				else{
 					send_signup_mail(u_name,u_email);
-					send_sign_up_confirm('+91'+u_mobile, u_name, 5678);
+					var client = require('twilio');
+					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
+					client.messages.create({
+						to: '+91'+ mobile,
+						from: "+12013654002",
+						body : 'Thank You '+ u_name +' for signing up for shortrip. Please use the following code to verify: ' + 5678
+					}, function(err, message){
+						//console.log(err);
+						//console.log(message);
+					});
 					res.json({ message: 'Success',code : 200, email: u_email, mobile: u_mobile, name : u_name, session_key: u_password });
 				}
 			});
