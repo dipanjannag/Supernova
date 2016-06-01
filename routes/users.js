@@ -21,7 +21,7 @@ router.route('/login').post(function(req, res) {
 			res.json({ message: 'User does not exists',code : 404 });
 		}
 		else{
-			console.log(usr.hash);
+			//console.log(usr.hash);
 			
 			if(usr.hash == u_password){
 				// auth successful. Create session and return
