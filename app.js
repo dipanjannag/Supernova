@@ -53,11 +53,11 @@ UserSchema.sync().then(function () {
 						verified_mobile : false,
 						session_key : "pqrs"
 					});*/
-					/*AdminSchema.create({
+					AdminSchema.create({
 						email: "ad@min",
 						hash : "pqrs",
 						session_key : "pqrs"
-					});*/
+					});
 					/*HotelSchema.create({name: "502 Fortune Heights", city_code:1}).then(function(htl){
 							
 						RoomSchema.create({type : 1, HotelId : htl.id, count: 4}).then(function(rm){

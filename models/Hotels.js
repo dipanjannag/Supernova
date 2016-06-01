@@ -1,7 +1,8 @@
+var config = require('../config/dbConfig.js')
 var Sequelize = require('sequelize');
 //var sequelize = new Sequelize('mysql://us-cdbr-azure-west-c.cloudapp.net:3306/sledgehammer', 'ba53a0dd1dcbb4', '8241b48e');
 //var sequelize = new Sequelize('sledgehammer', 'ba53a0dd1dcbb4', '8241b48e', { host: 'mysql://us-cdbr-azure-west-c.cloudapp.net:3306'})
-var sequelize = new Sequelize("mysql://bc4bb1c95fb526:1bb83737@eu-cdbr-west-01.cleardb.com/heroku_77aece663186b1b?reconnect=true",{
+var sequelize = new Sequelize(config.connection_str,{
   dialectOptions: {
     timeout: 30
   },
@@ -28,6 +29,7 @@ var Hotel = sequelize.define('Hotel', {
 	image_uri6 : Sequelize.STRING,
 	image_uri7 : Sequelize.STRING,
 	image_uri8 : Sequelize.STRING,
-	min_price : Sequelize.INTEGER
+	min_price : Sequelize.INTEGER,
+	call_in_number : Sequelize.STRING
 });
 module.exports = Hotel;

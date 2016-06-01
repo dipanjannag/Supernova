@@ -1,3 +1,4 @@
+var Room = require('../models/Room');
 var express = require('express');
 var auth = require('../middlewares/UserAuth');
 var adminAuth = require('../middlewares/AdminAuth');
@@ -12,7 +13,7 @@ router.route('/:room').post(auth,function(req, res) {
 	var end_d = req.body.end_d;
 	//console.log(start_d);
 	//console.log(end_d);
-	Booking.findOne({
+	Booking.findAll({
 		attributes:['id'],
 		where : {
 		    $and: [
@@ -32,41 +33,57 @@ router.route('/:room').post(auth,function(req, res) {
 				]
 	    }
 	}).then(function(booking){
+		console.log(booking)
+		booking = booking || [];
+		var count = booking.length;
+		Room.findOne({
+			attributes:['count'],
+			where: {
+				HotelId: req.params.room
+			}
+		}).then(function(room){
+			if(room.count > count){
+
+				// clean. you may book
+
+				Booking.create({
+					start : start_d,
+					end : end_d,
+					room_id : req.params.room
+				}).then(function(booked){
+					if(!booked){
+						res.json({ message: 'Internal error',code : 500 });
+					}
+					else{
+						//handle_partner_confirmation('+918158953392', booked.id);
+						//var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
+						//var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
+						 
+						//require the Twilio module and create a REST client 
+						var client = require('twilio');
+						client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
+						client.calls.create({ 
+							to: '+918158953392', 
+							from: "+12013654002", 
+							url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booked.id,           
+						}, function(err, call) {
+								res.json({ message: 'Success',code : 200, resource_id: booked.id, e: err, c : call }); 
+						});
+					}
+				});
+			}
+			else{
+				res.json({ message: 'Unavailable for the range',code : 404 });
+			}
+		})
 		if(!booking){
-			// clean. you may book
-			Booking.create({
-				start : start_d,
-				end : end_d,
-				room_id : req.params.room
-			}).then(function(booked){
-				if(!booked){
-					res.json({ message: 'Internal error',code : 500 });
-				}
-				else{
-					//handle_partner_confirmation('+918158953392', booked.id);
-					//var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
-					//var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
-					 
-					//require the Twilio module and create a REST client 
-					var client = require('twilio');
-					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
-					client.calls.create({ 
-						to: '+918158953392', 
-						from: "+12013654002", 
-						url: 'http://shortrip-supernova.herokuapp.com/call_partner/'+ booked.id,           
-					}, function(err, call) {
-							res.json({ message: 'Success',code : 200, resource_id: booked.id, e: err, c : call }); 
-					});
-					
-					
-					
-				}
-			});
+			
+			
 			
 		}
 		else{
 		
-			res.json({ message: 'Unavailable for the range',code : 404 });
+			
 		}
 	});
 });
