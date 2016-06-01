@@ -87,6 +87,8 @@ router.route('/signup').post(function(req, res) {
 					res.json({ message: 'Internal error',code : 500 });
 				}
 				else{
+					send_signup_mail(u_name,u_email);
+					send_sign_up_confirm('+91'+u_mobile, u_name, 5678);
 					res.json({ message: 'Success',code : 200, email: u_email, mobile: u_mobile, name : u_name, session_key: u_password });
 				}
 			});
@@ -102,8 +104,51 @@ router.route('/signup').post(function(req, res) {
 	})
 });
 
+var sendgrid  = require('sendgrid')('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');
 
 
+var send_signup_mail = function(name, email){
+	var body_html = "Thank you for signing up. Please click the following link to confirm your email id <a href=\"#\">activation link</a>";
+	var cardEmail = new sendgrid.Email({
+		to: email,
+		from: "admin@shortrip.com",
+		subject: "Thank You for signing up for Shortrip",
+		html: body_html, // This fills out the <%body%> tag inside your SendGrid template
+	});
+
+	// Tell SendGrid which template to use, and what to substitute. You can use as many substitutions as you want.
+	cardEmail.setFilters({"templates": {"settings": {"enabled": 1, "template_id": "86127c4b-726c-4c30-b108-a645e11d7a38"}}}); // Just replace this with the ID of the template you want to use
+	cardEmail.addSubstitution('%name%', name); // You don't need to have a subsitution, but if you want it, here's how you do that :)
+
+	// Everything is set up, let's send the email!
+	sendgrid.send(cardEmail, function(err, json){
+		if (err) {
+		  //console.log(err);
+		} else {
+		  //console.log('Email sent!');
+		}
+	});
+}
+
+var sid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'
+var secret = '9ff3d3048596aead6751fdd74fb3d55b​'
+var twilio_no = '+12013654002'
+
+var client = require('twilio')(sid, secret)
+
+
+
+
+var send_sign_up_confirm = function(mobile, name, code){
+	client.messages.create({
+		to: mobile,
+		from: twilio_no,
+		body : 'Thank You '+ name +' for signing up for shortrip. Please use the following code to verify: ' + code
+	}, function(err, message){
+		console.log(err);
+		console.log(message);
+	});
+};
 
 
 module.exports = router;
