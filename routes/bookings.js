@@ -6,11 +6,29 @@ var Booking = require('../models/Bookings');
 var router = express.Router();
 var http = require('http')
 
+
+var isDate = function(date) {
+    return ( (new Date(date) !== "Invalid Date" && !isNaN(new Date(date)) ));
+}
 router.route('/:room').post(auth,function(req, res) {
 	// this should be the body format. https://github.com/moment/moment/issues/1407
 	// I think a strict check should be there to check proper date format
 	var start_d = req.body.start_d;
 	var end_d = req.body.end_d;
+	//console.log(typeof(start_d))
+	//console.log(typeof(end_d))
+	//console.log(isDate(start_d))
+	//console.log(isDate(end_d))
+	if(isDate(start_d)&&isDate(end_d)){
+	}
+	else{
+		res.json({ message: 'Invalid date range passed',code : 500 });
+		return;
+	}
+	if(new Date(start_d) > new Date(end_d)){
+		res.json({ message: 'End date should be higher than start date',code : 500 });
+		return;
+	}
 	//console.log(start_d);
 	//console.log(end_d);
 	Booking.findAll({
@@ -33,7 +51,7 @@ router.route('/:room').post(auth,function(req, res) {
 				]
 	    }
 	}).then(function(booking){
-		console.log(booking)
+		//console.log(booking)
 		booking = booking || [];
 		var count = booking.length;
 		Room.findOne({
@@ -42,8 +60,10 @@ router.route('/:room').post(auth,function(req, res) {
 				HotelId: req.params.room
 			}
 		}).then(function(room){
+			//console.log(room.count)
+			//console.log(count)
 			if(room.count > count){
-
+				
 				// clean. you may book
 
 				Booking.create({
@@ -76,15 +96,6 @@ router.route('/:room').post(auth,function(req, res) {
 				res.json({ message: 'Unavailable for the range',code : 404 });
 			}
 		})
-		if(!booking){
-			
-			
-			
-		}
-		else{
-		
-			
-		}
 	});
 });
 
