@@ -44,11 +44,11 @@ router.route('/:room').post(auth,function(req, res) {
 				}
 				else{
 					//handle_partner_confirmation('+918158953392', booked.id);
-					var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
-					var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
+					//var accountSid = 'ACf6eec32361a5ddbf7025d202e4ec3fc6'; 
+					//var authToken = '9ff3d3048596aead6751fdd74fb3d55b​'; 
 					 
 					//require the Twilio module and create a REST client 
-					var client = require('twilio')(accountSid, authToken);
+					var client = require('twilio')(process.env.TWILIO_KEY, process.env.TWILIO_SECRET);
 					client.calls.create({ 
 						to: '+918158953392', 
 						from: "+12013654002", 
