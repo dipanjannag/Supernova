@@ -12,7 +12,7 @@ var sequelize = new Sequelize(config.connection_str,{
     idle: 30000
   },
 });
-var Hall = sequelize.define('Hall', {
+var ConfHall = sequelize.define('ConfHall', {
   name: Sequelize.STRING,
   address: Sequelize.TEXT,
   star_rating : Sequelize.INTEGER,
@@ -35,4 +35,4 @@ var Hall = sequelize.define('Hall', {
 	non_veg_min_price : Sequelize.INTEGER,
 	capacity : Sequelize.INTEGER
 });
-module.exports = Hall;
+module.exports = ConfHall;

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var UserSchema = require('./models/User');
 var HotelSchema = require('./models/Hotels');
 var HallSchema = require('./models/Halls');
+var ConfSchema = require('./models/ConfHall');
 var RoomSchema = require('./models/Room');
 var AdminSchema = require('./models/AdminUser');
 var BookingSchema = require('./models/Bookings');
@@ -14,6 +15,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var hotels = require('./routes/hotels');
 var halls = require('./routes/halls');
+var conf_halls = require('./routes/confHalls');
 var book = require('./routes/bookings');
 var rooms = require('./routes/rooms');
 var partner_accept = require('./routes/pertnerAccept');
@@ -39,6 +41,7 @@ app.use('/hotels', hotels);
 app.use('/rooms', rooms);
 app.use('/book', book);
 app.use('/halls', halls);
+app.use('/conf_halls', conf_halls);
 app.use('/call_partner', partner_accept);
 
 UserSchema.sync().then(function () {
@@ -61,7 +64,9 @@ UserSchema.sync().then(function () {
 						hash : "pqrs",
 						session_key : "pqrs"
 					});
-					HallSchema.sync().then(function(){});
+					HallSchema.sync().then(function(){
+						ConfSchema.sync().then(function(){})
+					});
 					/*HotelSchema.create({name: "502 Fortune Heights", city_code:1}).then(function(htl){
 							
 						RoomSchema.create({type : 1, HotelId : htl.id, count: 4}).then(function(rm){
