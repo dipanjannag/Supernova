@@ -92,7 +92,7 @@ router.route('/signup').post(function(req, res) {
 					res.json({ message: 'Internal error',code : 500 });
 				}
 				else{
-					send_signup_mail(u_name,u_email);
+					send_signup_mail(u_name,u_email, eml_code);
 					var client = require('twilio');
 					client = client('ACf6eec32361a5ddbf7025d202e4ec3fc6', '9ff3d3048596aead6751fdd74fb3d55b');
 					client.messages.create({
@@ -121,8 +121,10 @@ router.route('/signup').post(function(req, res) {
 var sendgrid  = require('sendgrid')('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');
 
 
-var send_signup_mail = function(name, email){
-	var body_html = "Thank you for signing up. Please click the following link to confirm your email id <a href=\"#\">activation link</a>";
+var send_signup_mail = function(name, email, code){
+	var body_html = "Thank you for signing up. Please click the following link to confirm your email id <a href=\""+
+									"http://api.shortrip.com/verify/"+ encodeURIComponent(email) + "/"+encodeURIComponent(code)
+									+"\">activation link</a>";
 	var cardEmail = new sendgrid.Email({
 		to: email,
 		from: "admin@shortrip.com",
