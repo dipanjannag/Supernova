@@ -37,7 +37,8 @@ router.route('/login').post(function(req, res) {
 						res.json({ message: 'Internal error',code : 500 });
 					}
 					else{
-						res.json({ message: 'Success', session_key : "5678", name : usr.name, mobile: usr.mobile ,email: usr.email, code : 200 });
+						res.json({ message: 'Success', session_key : "5678", name : usr.name, mobile: usr.mobile ,email: usr.email
+												, email_verified : usr.verified_email , mobile_verified : usr.verified_mobile, code : 200 });
 					}
 				});
 			}
@@ -74,6 +75,8 @@ router.route('/signup').post(function(req, res) {
 	    }
 	}).then(function(usr){
 		if(!usr){
+			var eml_code = Math.floor(Math.random()*90000) + 10000;
+			var sm_code = Math.floor(Math.random()*90000) + 10000;
 			// cleane user create a new one
 			User.create({
 				name: u_name,
@@ -81,7 +84,9 @@ router.route('/signup').post(function(req, res) {
 				mobile : u_mobile,
 				hash : u_password,
 				verified_email : false,
-				verified_mobile : false
+				verified_mobile : false,
+				email_code : eml_code,
+				sms_code : sm_code
 			}).then(function(ussr){
 				if(!ussr){
 					res.json({ message: 'Internal error',code : 500 });
@@ -93,7 +98,7 @@ router.route('/signup').post(function(req, res) {
 					client.messages.create({
 						to: '+91'+ u_mobile,
 						from: "+12013654002",
-						body : 'Thank You '+ u_name +' for signing up for shortrip. Please use the following code to verify: ' + 5678
+						body : 'Thank You '+ u_name +' for signing up for shortrip. Please use the following code to verify: ' + sm_code
 					}, function(err, message){
 						//console.log(err);
 						//console.log(message);
