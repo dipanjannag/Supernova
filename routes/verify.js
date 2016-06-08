@@ -2,13 +2,8 @@ var express = require('express');
 var User = require('../models/User')
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
-});
-
-/// user login. would create and return session key
-router.route('/verify/:email/:code').get(function(req,res){
+/// user verify. No auth
+router.route('/:email/:code').get(function(req,res){
 	var u_email = req.params.email;
 	var code = req.params.code;
 	User.findOne({
@@ -22,7 +17,11 @@ router.route('/verify/:email/:code').get(function(req,res){
 		}
 		else{
 			if(code == usr.email_code){
-				res.json({ message: 'User verified',code : 200 });
+				usr.updateAttributes({
+				  verified_email: true
+				}).then(function(){
+					res.json({ message: 'User verified',code : 200 });
+				})
 			}
 			else{
 				res.json({ message: 'User could not be verified',code : 203 });
@@ -32,21 +31,26 @@ router.route('/verify/:email/:code').get(function(req,res){
 	});
 
 });
-router.route('/verify_mobile/:mobile/:code').get(function(req,res){
-	var mobile = req.params.mobile;
+router.route('/mobile/:mobile/:code').get(function(req,res){
+	var u_mobile = req.params.mobile;
 	var code = req.params.code;
 	User.findOne({
 		//attributes: ['hash'],
 		where : {
-			email : u_email
+			mobile : u_mobile
 		}
 	}).then(function(usr){
 		if(!usr){
 			res.json({ message: 'User does not exists',code : 404 });
 		}
 		else{
-			if(code == usr.email_code){
-				res.json({ message: 'User verified',code : 200 });
+			if(code == usr.sms_code){
+				usr.updateAttributes({
+				  verified_mobile: true
+				}).then(function(){
+					res.json({ message: 'User verified',code : 200 });
+				})
+				
 			}
 			else{
 				res.json({ message: 'User could not be verified',code : 203 });
@@ -55,4 +59,6 @@ router.route('/verify_mobile/:mobile/:code').get(function(req,res){
 		
 	});
 
-})
+});
+
+module.exports = router;

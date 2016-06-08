@@ -19,6 +19,7 @@ var conf_halls = require('./routes/confHalls');
 var book = require('./routes/bookings');
 var rooms = require('./routes/rooms');
 var partner_accept = require('./routes/pertnerAccept');
+var user_verify = require('./routes/verify');
 
 var app = express();
 
@@ -43,6 +44,7 @@ app.use('/book', book);
 app.use('/halls', halls);
 app.use('/conf_halls', conf_halls);
 app.use('/call_partner', partner_accept);
+app.use('/verify', user_verify);
 
 UserSchema.sync().then(function () {
    HotelSchema.sync().then(function(){
