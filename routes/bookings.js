@@ -1,10 +1,60 @@
 var Room = require('../models/Room');
+var Hotel = require('../models/Hotels');
 var express = require('express');
 var auth = require('../middlewares/UserAuth');
 var adminAuth = require('../middlewares/AdminAuth');
 var Booking = require('../models/Bookings');
 var router = express.Router();
 var http = require('http')
+
+router.route('/').get(auth,function(req, res) {
+	var user = req.get('user');
+	Booking.findAll({
+		where : {
+			customerEmail : user
+		}
+	}).then(function(bookings){
+		var bookings = bookings || [];
+		var ret = [];
+		for(var i = 0; i < bookings.length ; i++){
+			ret.push({
+				start : bookings[i].start,
+				end : bookings[i].end,
+				rejected : bookings[i].rejected,
+				room_id : bookings[i].room_id
+			})
+		}
+		res.json(ret);
+	})
+});
+
+router.route('/:id').get(auth,function(req, res) {
+	Booking.findOne({
+		where : {
+			id : req.params.id
+		}
+	}).then(function(booking){
+		if(booking == null){
+			res.json({code : 404, message : 'no booking found'});
+			return;		
+		}
+		Room.findOne({
+			where : {
+				id : booking.room_id
+			}		
+		}).then(function(room){
+			Hotel.findOne({ 
+				where : {
+					id : room.HotelId
+				}
+			}).then(function(htl){
+				res.json({ id: booking.id, start : booking.start, end : booking.end, hotel_id : htl.id, hotel_name: htl.name, hotel_address: htl.address,
+				hotel_image : htl.image_uri1 });
+			})
+			
+		})
+	})
+})
 
 
 var isDate = function(date) {
@@ -57,7 +107,7 @@ router.route('/:room').post(auth,function(req, res) {
 		Room.findOne({
 			attributes:['count'],
 			where: {
-				HotelId: req.params.room
+				id: req.params.room
 			}
 		}).then(function(room){
 			//console.log(room.count)
@@ -69,7 +119,8 @@ router.route('/:room').post(auth,function(req, res) {
 				Booking.create({
 					start : start_d,
 					end : end_d,
-					room_id : req.params.room
+					room_id : req.params.room,
+					customerEmail : req.get('user')
 				}).then(function(booked){
 					if(!booked){
 						res.json({ message: 'Internal error',code : 500 });
