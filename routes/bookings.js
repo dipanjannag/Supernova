@@ -18,6 +18,7 @@ router.route('/').get(auth,function(req, res) {
 		var ret = [];
 		for(var i = 0; i < bookings.length ; i++){
 			ret.push({
+				id : bookings[i].id,
 				start : bookings[i].start,
 				end : bookings[i].end,
 				rejected : bookings[i].rejected,
@@ -65,10 +66,10 @@ router.route('/:room').post(auth,function(req, res) {
 	// I think a strict check should be there to check proper date format
 	var start_d = req.body.start_d;
 	var end_d = req.body.end_d;
-	//console.log(typeof(start_d))
-	//console.log(typeof(end_d))
-	//console.log(isDate(start_d))
-	//console.log(isDate(end_d))
+	console.log(start_d)
+	console.log(end_d)
+	console.log(isDate(start_d))
+	console.log(isDate(end_d))
 	if(isDate(start_d)&&isDate(end_d)){
 	}
 	else{
