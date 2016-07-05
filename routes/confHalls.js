@@ -14,7 +14,6 @@ router.get('/:city_code', auth ,  function(req, res) {
   Halls.findAll({
 		where : {
 			city_code : req.params.city_code,
-			star_rating : star_rat,
 			min_price : {
 				$lte: budget_max,
 				$gte: budget_min
