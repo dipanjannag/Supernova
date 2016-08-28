@@ -30,6 +30,11 @@ var Hotel = sequelize.define('Hotel', {
 	image_uri7 : Sequelize.STRING,
 	image_uri8 : Sequelize.STRING,
 	min_price : Sequelize.INTEGER,
+	min_price_4_hour : Sequelize.INTEGER,
+	min_price_12_hour : Sequelize.INTEGER,
+	min_price_24_hour : Sequelize.INTEGER,
+	min_price_48_hour : Sequelize.INTEGER,
+	min_price_72_hour : Sequelize.INTEGER,
 	call_in_number : Sequelize.STRING
 });
 module.exports = Hotel;

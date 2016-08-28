@@ -122,7 +122,12 @@ router.get('/:hotel_id', auth, function(req, res) {
 						id : rms[i].id,
 						type : rms[i].type,
 						count : rms[i].count,
-						price : rms[i].price_per_hour
+						price : rms[i].price_per_hour,
+						price_4_hour : rms[i].price_4_hour,
+						price_12_hour : rms[i].price_8_hour,
+						price_24_hour : rms[i].price_24_hour,
+						price_48_hour : rms[i].price_48_hour,
+						price_72_hour : rms[i].price_72_hour
 					});
 				}
 				//ret.rooms = ret_rooms;

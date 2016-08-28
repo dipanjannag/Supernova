@@ -19,7 +19,12 @@ var Room = sequelize.define('Room', {
   start_date : Sequelize.DATE,
   end_date : Sequelize.DATE,
   count : Sequelize.INTEGER,
-	price_per_hour : Sequelize.INTEGER
+	price_per_hour : Sequelize.INTEGER,
+	price_4_hour : Sequelize.INTEGER,
+	price_12_hour : Sequelize.INTEGER,
+	price_24_hour : Sequelize.INTEGER,
+	price_48_hour : Sequelize.INTEGER,
+	price_72_hour : Sequelize.INTEGER
 }) ;
 
 Hotel.hasMany(Room, {as: 'available_rooms'});

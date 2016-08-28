@@ -37,7 +37,12 @@ router.get('/:city_code', auth ,  function(req, res) {
 				location_lon : htl[i].location_lon,
 				city_code : htl[i].city_code,
 				image_uri : htl[i].image_uri1,
-				min_price : htl[i].min_price
+				min_price : htl[i].min_price,
+				min_price_4_hour : htl[i].min_price_4_hour,
+				min_price_12_hour : htl[i].min_price_12_hour,
+				min_price_24_hour : htl[i].min_price_24_hour,
+				min_price_48_hour : htl[i].min_price_48_hour,
+				min_price_72_hour : htl[i].min_price_72_hour
 			});
 		}
 		res.json(ret);
