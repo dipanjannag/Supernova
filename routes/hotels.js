@@ -10,7 +10,7 @@ router.get('/:city_code', auth ,  function(req, res) {
 	var i = 0;
 	var star_rat = req.query.star || 3;
 	var budget_min = req.query.min_price || 0;
-	var budget_max = req.query.max_price || 1000;
+	var budget_max = req.query.max_price || 1000000;
   Hotel.findAll({
 		where : {
 			city_code : req.params.city_code,
